@@ -31,9 +31,9 @@
   },
   "dependencies": {
     "@babylonjs/core": "9.30.0",
-    "@colyseus/core": "0.18.18",
-    "@colyseus/schema": "5.0.36",
-    "@colyseus/sdk": "0.18.5",
+    "@colyseus/core": "0.18.26",
+    "@colyseus/schema": "5.0.43",
+    "@colyseus/sdk": "0.18.9",
     "@colyseus/ws-transport": "0.18.4",
     "express": "5.1.0"
   },
