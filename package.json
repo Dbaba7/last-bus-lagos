@@ -30,7 +30,7 @@
     "voice:script": "node --import tsx scripts/voice-script.ts"
   },
   "dependencies": {
-    "@babylonjs/core": "9.30.0",
+    "@babylonjs/core": "9.33.2",
     "@colyseus/core": "0.18.18",
     "@colyseus/schema": "5.0.36",
     "@colyseus/sdk": "0.18.5",
