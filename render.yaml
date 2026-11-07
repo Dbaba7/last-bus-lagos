@@ -1,0 +1,16 @@
+# One process owns all rooms. Do not enable replicas without shared routing.
+services:
+  - type: web
+    name: last-bus-lagos
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci --include=dev && npm run build && npm prune --omit=dev
+    startCommand: ALLOWED_ORIGINS="$RENDER_EXTERNAL_URL" npm run start:server
+    healthCheckPath: /ready
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: NODE_VERSION
+        value: '24'
+      - key: NODE_ENV
+        value: production

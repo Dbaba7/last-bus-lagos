@@ -1,0 +1,50 @@
+{
+  "name": "last-bus-lagos",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "workspaces": [
+    "apps/client",
+    "apps/server",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "npm run typecheck && vite build --config apps/client/vite.config.ts && node scripts/build-server.mjs",
+    "licenses": "node scripts/licenses.mjs",
+    "verify:clean": "node scripts/verify-clean.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit --noUnusedLocals --noUnusedParameters",
+    "test": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration --maxWorkers=1",
+    "test:multiplayer": "node --import tsx tests/multiplayer/smoke.ts",
+    "test:soak": "node --import tsx tests/multiplayer/soak.ts",
+    "test:latency": "node --import tsx tests/multiplayer/latency.ts",
+    "test:browser-combat": "node --import tsx tests/multiplayer/browser-combat.ts",
+    "test:e2e": "node scripts/browser-test.mjs",
+    "test:browser-recovery": "node scripts/browser-recovery.mjs",
+    "start:server": "node dist/server/index.js",
+    "voice:script": "node --import tsx scripts/voice-script.ts"
+  },
+  "dependencies": {
+    "@babylonjs/core": "9.30.0",
+    "@colyseus/core": "0.18.18",
+    "@colyseus/schema": "5.0.36",
+    "@colyseus/sdk": "0.18.5",
+    "@colyseus/ws-transport": "0.18.4",
+    "express": "5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^24.0.0",
+    "playwright": "1.62.1",
+    "esbuild": "0.28.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.3"
+  }
+}

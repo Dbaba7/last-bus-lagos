@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.*.local
+artifacts/
+*.log
+.DS_Store
+apps/client/src/music/

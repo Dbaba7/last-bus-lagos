@@ -1,0 +1,1041 @@
+MASTER BUILD PROMPT: LAST BUS: LAGOS
+
+Build a Competitive, Browser-Based Multiplayer FPS Set in Lagos, Nigeria
+
+You are the founding engineering team responsible for building LAST BUS: LAGOS, a browser-based multiplayer first-person shooter inspired by the accessibility of modern web games, the competitive feel of Call of Duty-style arena shooters, and the cultural identity of Lagos, Nigeria.
+
+You are not building a concept, a pitch deck, a static mockup, or a game menu that pretends to be playable. You are building a real, functioning game.
+
+Your mission is to deliver a polished, playable multiplayer FPS prototype as quickly as possible without creating an unmaintainable codebase.
+
+Think like a senior game developer, gameplay programmer, networking engineer, technical artist, UI/UX designer, and product-minded CTO.
+
+Build the actual product. Make sensible decisions independently. Test what you build. Do not stop at planning.
+
+---
+
+1. PRODUCT VISION
+
+The concept
+
+LAST BUS: LAGOS is a fast-paced, multiplayer browser FPS where players compete in fictionalized, Lagos-inspired urban environments.
+
+Imagine the immediacy of launching a browser game, the satisfaction of a responsive competitive shooter, and the familiarity of seeing a Nigerian environment represented with care and personality.
+
+The game should be easy to enter, fun within the first minute, and compelling enough that players want another match.
+
+It must work on ordinary gaming and mid-range PCs without requiring a large download, a powerful graphics card, or a complicated installation process.
+
+The core product philosophy is:
+
+- Instant access.
+- Responsive combat.
+- Short, competitive matches.
+- Recognizably Nigerian environments.
+- Multiplayer with friends.
+- Strong replayability.
+- Shareable rooms and results.
+- A technical foundation that supports future growth.
+
+We are not building an AAA production. We are building a small, excellent game that can grow.
+
+Working title
+
+LAST BUS: LAGOS
+
+Treat this as a working title. Keep branding and game naming configurable so we can change them without rewriting the application.
+
+Target audience
+
+Primary:
+
+- Nigerian gamers.
+- Fans of FPS and arena shooters.
+- Players who enjoy competitive matches with friends.
+- PC gamers who appreciate accessible, lightweight games.
+
+Secondary:
+
+- International gamers curious about Lagos and Nigerian culture.
+- Browser-gaming communities.
+- Streamers, gaming creators, and competitive community organizers.
+
+Platform
+
+Build for desktop browsers first.
+
+Priority browsers:
+
+- Chrome.
+- Microsoft Edge.
+- Firefox, where supported.
+
+Use keyboard and mouse as the primary input method.
+
+Do not prioritize mobile touch controls, consoles, or native applications until the desktop experience works reliably.
+
+---
+
+2. THE NON-NEGOTIABLE PRIORITY
+
+Build in this order:
+
+1. A functioning 3D game.
+2. Responsive first-person movement and aiming.
+3. A weapon that shoots and registers hits correctly.
+4. A multiplayer server that synchronizes real players.
+5. A playable arena with proper collision.
+6. A complete match lifecycle.
+7. A lobby and shareable room system.
+8. A polished interface and Lagos-inspired art direction.
+9. Performance optimization and testing.
+10. Additional features only after the core game is stable.
+
+Do not spend most of the development time on a landing page while the actual game remains unplayable.
+
+Do not generate a giant, complicated project before proving the core technology works.
+
+At every stage, maintain a working, testable build.
+
+---
+
+3. GAMEPLAY DESIGN
+
+Core game mode: STREET WARS
+
+The first release should feature one primary mode: Team Deathmatch.
+
+Players join two opposing teams and compete to reach a kill limit before time expires.
+
+Initial configuration:
+
+- 4–8 players per match, with an architecture that can later support more.
+- Two teams.
+- Approximately 4-minute matches.
+- Configurable kill limit, initially 30 team eliminations.
+- Automatic respawning after a short delay.
+- A short pre-match countdown.
+- A visible match timer.
+- Live team scores.
+- A scoreboard showing player eliminations, deaths, and ping where available.
+- A clear end-of-match screen.
+- A rematch or return-to-lobby option.
+
+These values must be configurable rather than hardcoded throughout the codebase.
+
+A match should feel energetic without becoming chaotic or unfair.
+
+Player movement
+
+Implement:
+
+- First-person camera.
+- Mouse-look with pointer lock.
+- WASD movement.
+- Sprinting.
+- Jumping.
+- Gravity.
+- Ground detection.
+- Collision with walls and level geometry.
+- Sensible acceleration and deceleration.
+- Configurable movement speed.
+- Configurable mouse sensitivity.
+- Reliable respawning.
+
+Crouching, sliding, wall-running, prone movement, and advanced movement mechanics are not required for the initial prototype.
+
+Prioritize responsiveness and consistency over unnecessary complexity.
+
+The player must not walk through walls, fall through the floor, become stuck after respawning, or experience wildly inconsistent movement across frame rates.
+
+Shooting and combat
+
+Implement at least two usable weapons.
+
+Weapon A: Assault rifle
+
+- Automatic fire.
+- Moderate recoil.
+- Medium damage.
+- Moderate magazine capacity.
+- Reloading.
+- Visible muzzle feedback.
+- Distinctive firing audio.
+
+Weapon B: Sidearm
+
+- Semi-automatic fire.
+- Faster weapon switching.
+- Smaller magazine.
+- Different damage and firing characteristics.
+
+If time allows, introduce a third weapon, such as a shotgun. Do not delay the playable multiplayer prototype to add it.
+
+Weapon behavior must be configurable through centralized weapon definitions.
+
+Implement:
+
+- Fire-rate limits.
+- Ammunition tracking.
+- Reloading.
+- Weapon switching.
+- Hit feedback.
+- Damage feedback.
+- Death and respawn.
+- Basic recoil and firing effects.
+- Crosshair feedback.
+- A simple hit marker.
+- Distinctive sound effects.
+
+Do not make weapons feel identical with different models. They must have meaningful differences.
+
+Combat fairness
+
+The server must validate damage and eliminate clients' ability to decide their own kills.
+
+Client-side prediction can improve responsiveness, but the server must remain authoritative over:
+
+- Player health.
+- Damage.
+- Ammunition.
+- Fire-rate limits.
+- Eliminations.
+- Respawning.
+- Team scores.
+- Match state.
+
+Implement practical server-side validation and basic anti-cheat protections from the beginning.
+
+Do not claim the game is cheat-proof. Design it so common client-side manipulation is harder and suspicious behavior can be detected.
+
+---
+
+4. THE WORLD: LAGOS WITH ITS OWN IDENTITY
+
+The environment is a major part of the game's identity.
+
+Create a fictionalized Lagos-inspired urban arena rather than copying an existing commercial game's map.
+
+First map: OJUELEGBA JUNCTION
+
+Working map name: Ojuelegba Junction.
+
+Create a compact, symmetrical or carefully balanced arena inspired by Lagos streets and commercial districts.
+
+The setting can include:
+
+- Colorful commercial storefronts.
+- Concrete buildings with balconies.
+- Nigerian street signage.
+- Danfo-inspired minibuses used as environmental props.
+- Road markings.
+- Market stalls.
+- Streetlights.
+- Electrical poles and cables.
+- Posters and painted advertisements.
+- Pedestrian barriers.
+- Construction materials.
+- Rooftop silhouettes.
+- Nigerian-inspired textures and color palettes.
+
+The location is fictionalized. Do not claim the layout is an exact representation of a real street.
+
+Level-design principles
+
+The map must be designed for combat, not merely sightseeing.
+
+Include:
+
+- Two team spawn zones.
+- Multiple routes between spawn areas.
+- Short- and medium-range engagement zones.
+- Meaningful cover.
+- A limited number of long sightlines.
+- Flanking opportunities.
+- Clear navigation landmarks.
+- Readable silhouettes.
+- Collision boundaries that prevent players leaving the intended arena.
+
+Avoid creating an oversized map that makes players spend most of a four-minute match searching for opponents.
+
+The map should feel distinctly Lagos-inspired even when rendered with relatively simple geometry.
+
+Use a modular environment system where practical. Buildings, walls, stalls, vehicles, and props should be reusable assets rather than individually hardcoded one-off objects.
+
+Use fictional shop names and original visual details. Avoid unlicensed brand logos and copyrighted commercial assets.
+
+Visual quality
+
+Aim for stylized realism rather than photorealism.
+
+The game should look intentional and recognizable without requiring expensive assets.
+
+Prioritize:
+
+- Good lighting.
+- Strong material definition.
+- Atmospheric depth.
+- Readable geometry.
+- Consistent art direction.
+- A cohesive palette.
+- Clear combat visibility.
+- Good visual feedback when firing and taking damage.
+
+Use original, procedurally generated, properly licensed, or otherwise authorized assets.
+
+Never rely on missing external assets or fragile image URLs for essential game functionality.
+
+If high-quality custom assets are unavailable, create attractive procedural geometry and original placeholder assets that can be replaced later.
+
+---
+
+5. ART DIRECTION AND USER EXPERIENCE
+
+The game should feel like a real indie FPS, not a generic template.
+
+Art direction
+
+Use a contemporary urban visual identity inspired by Lagos.
+
+Suggested direction:
+
+- Warm concrete and dusty street tones.
+- Restrained yellow, green, red, and blue accents.
+- Dark, high-contrast interface elements.
+- Strong typography.
+- Clear team colors.
+- Restrained visual effects that communicate gameplay.
+
+Use these as direction, not rigid limitations.
+
+The world can be colorful and lively, but combat readability comes first.
+
+Main menu
+
+Create a polished landing/menu screen with:
+
+- The LAST BUS: LAGOS wordmark.
+- A strong background showing the game environment.
+- A prominent Play button.
+- A Join Room option.
+- Settings.
+- A short, clear game description.
+- Loading and connection status.
+- A clean responsive layout.
+
+The menu must connect to actual functionality.
+
+No decorative buttons that do nothing.
+
+In-game HUD
+
+Include:
+
+- Crosshair.
+- Health.
+- Ammunition and reserve ammunition.
+- Current weapon.
+- Team scores.
+- Match timer.
+- Kill feed.
+- Hit markers.
+- Match notifications.
+- Optional network latency indicator.
+
+The HUD must remain readable during combat without obscuring too much of the screen.
+
+Settings
+
+Include:
+
+- Mouse sensitivity.
+- Audio volume.
+- Graphics quality presets.
+- Camera or visual preferences where practical.
+- Keybinding documentation.
+
+Persist appropriate preferences locally.
+
+Do not store authentication secrets or sensitive information in browser storage.
+
+Audio
+
+Use original or authorized sounds.
+
+Prioritize:
+
+- Weapon firing.
+- Reloading.
+- Footsteps.
+- Hit confirmation.
+- Elimination.
+- Respawn.
+- UI interactions.
+- Match start and end.
+- Subtle environmental ambience.
+
+Audio must communicate distance and action clearly enough to support gameplay.
+
+Avoid copyrighted music and unlicensed sound packs.
+
+---
+
+6. MULTIPLAYER ARCHITECTURE
+
+Multiplayer is a foundational requirement, not a later feature.
+
+A single-player demo with fake player models does not satisfy the brief.
+
+Real players on different devices must be able to join the same match and interact.
+
+Preferred technology direction
+
+Evaluate the following starting stack:
+
+- Client: TypeScript with Babylon.js.
+- Multiplayer server: Node.js with TypeScript and Colyseus.
+- Build tooling: Vite.
+- Version control: Git.
+- Automated checks: TypeScript checks, linting where configured, and relevant tests.
+- Hosting: a static host for the client and a persistent Node-compatible host for the multiplayer server.
+
+These are preferred defaults, not reasons to force an unsuitable implementation.
+
+Before committing to the architecture, verify current package compatibility, maintenance status, deployment requirements, browser support, and licensing.
+
+Build a tiny technical prototype if necessary to confirm that the renderer, networking framework, and deployment environment work together.
+
+Do not switch frameworks casually after implementation begins. If you have a compelling technical reason to change the stack, explain it briefly and establish the alternative before proceeding.
+
+Server responsibilities
+
+The server must own authoritative game state, including:
+
+- Room membership.
+- Player identity within a match.
+- Team assignment.
+- Match countdown and timer.
+- Player position validation.
+- Health.
+- Weapon state.
+- Damage.
+- Eliminations.
+- Respawns.
+- Team scores.
+- Match completion.
+
+Clients send player inputs and action requests. They must not be allowed to submit arbitrary damage values, award themselves eliminations, or overwrite authoritative match state.
+
+Synchronization
+
+Implement:
+
+- Consistent player state updates.
+- Remote player interpolation.
+- Appropriate client-side prediction where justified.
+- Reasonable reconciliation for local movement if supported by the chosen architecture.
+- Server-side validation of important actions.
+- Connection and disconnection handling.
+- Clean player removal.
+- Respawn synchronization.
+- Match-state synchronization for late joiners where permitted.
+- Sensible message rates and payload sizes.
+
+For shooting, choose a documented hit-registration strategy that matches the prototype's networking model.
+
+Prefer a server-validated approach. If latency compensation is implemented, bound it and validate the historical state used for hit registration.
+
+Do not implement an elaborate lag-compensation system before basic multiplayer works.
+
+Rooms
+
+Support:
+
+- Public matchmaking or a simple public room list.
+- Private rooms.
+- Shareable room codes or URLs.
+- Joining an existing room.
+- Leaving a room safely.
+- Full-room handling.
+- Clear error messages.
+- Reconnection behavior where feasible.
+
+The intended user journey is:
+
+Open website → click Play → enter a match or create a room → share the room link → friends join → play → see results → rematch.
+
+Minimize friction.
+
+Guest play should be supported initially. Avoid forcing account creation before someone can try the game.
+
+Security
+
+Never trust the browser to determine authoritative outcomes.
+
+Validate all gameplay messages and constrain:
+
+- Movement inputs.
+- Fire rates.
+- Ammunition use.
+- Reload timing.
+- Damage requests.
+- Player state transitions.
+- Room operations.
+
+Use server-controlled time for match logic.
+
+Add sensible message validation, payload limits, room capacity limits, and basic connection safeguards.
+
+Do not introduce unnecessary personal-data collection or invasive tracking.
+
+---
+
+7. PERFORMANCE AND BROWSER ACCESSIBILITY
+
+The game should be accessible to players with ordinary PC hardware and internet connections.
+
+Optimize for:
+
+- Fast initial loading.
+- Minimal unnecessary downloads.
+- Efficient 3D geometry.
+- Reusable materials and textures.
+- Reasonable draw calls.
+- Limited expensive real-time effects.
+- Efficient multiplayer updates.
+- Low memory consumption.
+- Stable frame pacing.
+
+Use asset compression and lazy loading where appropriate.
+
+Use a loading screen that communicates real progress rather than displaying a fake percentage.
+
+Provide graphics presets such as Low, Medium, and High.
+
+Do not promise that every computer can run the game. Establish a practical baseline and test it.
+
+Performance targets
+
+Treat these as goals to measure, not claims to display without evidence:
+
+- Aim for 60 FPS on a reasonable mid-range PC at the agreed baseline settings.
+- Avoid sustained frame-time spikes during normal combat.
+- Keep initial download size small enough for browser-first access.
+- Target an initial playable load within several seconds on a good connection, then measure on slower connections.
+- Keep multiplayer responsive under realistic network latency.
+- Support the intended 4–8 player match without obvious synchronization failures.
+
+Record actual measurements during testing.
+
+If a target is missed, identify the bottleneck and fix the highest-impact issue first.
+
+---
+
+8. WEBSITE AND GAME FLOW
+
+Build a complete, coherent experience around the playable game.
+
+Required screens and states:
+
+1. Main menu.
+2. Creating a room.
+3. Joining a room.
+4. Waiting lobby.
+5. Connecting and reconnecting.
+6. Loading a match.
+7. Active gameplay.
+8. Pause/settings interface.
+9. Match results.
+10. Return to lobby or rematch.
+11. Connection failure and recovery.
+
+Every screen must have a working path through the application.
+
+Use a consistent design system for colors, typography, spacing, buttons, overlays, and feedback.
+
+The game must handle:
+
+- Failed connections.
+- Full rooms.
+- Server restarts.
+- Unexpected disconnections.
+- Invalid room codes.
+- Players leaving mid-match.
+- Empty lobbies.
+- Browser refreshes.
+- Pointer-lock denial.
+- Unsupported browser capabilities.
+
+Give users understandable feedback rather than leaving them on an indefinite loading screen.
+
+---
+
+9. TECHNICAL ARCHITECTURE AND CODE QUALITY
+
+Organize the project so that another developer can understand and extend it.
+
+Prefer a clean structure similar to:
+
+- "apps/client": browser application, renderer, UI, input, audio, HUD.
+- "apps/server": authoritative game server, rooms, matchmaking, simulation, validation.
+- "packages/shared": shared types, configuration, protocol definitions, weapon data.
+- "docs": architecture, development setup, networking protocol, testing, deployment.
+
+Adapt this structure to the chosen framework when appropriate.
+
+Separate responsibilities into sensible modules:
+
+- Player controller.
+- Camera controller.
+- Weapon system.
+- Combat and hit registration.
+- Player health.
+- Multiplayer client.
+- Server simulation.
+- Match state machine.
+- Room management.
+- Level construction.
+- HUD.
+- Audio manager.
+- Settings.
+- Asset management.
+
+Avoid:
+
+- One enormous application file.
+- Duplicated game-state logic.
+- Arbitrary hardcoded constants throughout the codebase.
+- Unnecessary dependencies.
+- Dead buttons.
+- Placeholder functions that silently do nothing.
+- Swallowed exceptions.
+- Fake network state.
+- Fake player counts.
+- Hardcoded credentials.
+- Committing secrets.
+- Overengineering for imaginary future scale.
+
+Use TypeScript types and explicit contracts between client and server.
+
+Centralize configurable values such as movement speed, weapon damage, fire rate, match duration, and room capacity.
+
+Include useful logging and clear error handling without exposing sensitive information.
+
+---
+
+10. DEVELOPMENT STRATEGY: BUILD IN VERTICAL SLICES
+
+Do not attempt to build everything simultaneously.
+
+Work through these milestones in order.
+
+Milestone 0: Inspect and establish
+
+Before modifying anything:
+
+- Inspect the existing repository.
+- Identify the framework, dependencies, scripts, and existing functionality.
+- Check whether the project is empty, partially implemented, or already functional.
+- Preserve useful existing work.
+- Identify missing infrastructure.
+- Establish how the application will be run and tested.
+
+Then provide a concise implementation plan and immediately begin execution.
+
+Do not stop after writing the plan.
+
+Milestone 1: Playable local FPS
+
+Implement:
+
+- 3D scene.
+- Ground and walls.
+- Player movement.
+- Mouse-look.
+- Collision.
+- Crosshair.
+- Weapon firing.
+- Hit registration against targets.
+- Health and elimination feedback.
+
+At this milestone, a developer must be able to open the game and actually play.
+
+Temporary target dummies are acceptable for local testing.
+
+Milestone 2: Real multiplayer
+
+Implement:
+
+- Server process.
+- Room creation and joining.
+- Multiple connected players.
+- Player synchronization.
+- Authoritative combat.
+- Health and eliminations.
+- Respawning.
+- Team assignment.
+- Live scores.
+
+Test with at least two independent clients, not just two characters rendered by one client.
+
+Milestone 3: First complete match
+
+Implement:
+
+- Team Deathmatch.
+- Spawn points.
+- Match countdown.
+- Match timer.
+- Kill limit.
+- Kill feed.
+- Scoreboard.
+- Match completion.
+- Rematch flow.
+
+A match must be playable from start to finish.
+
+Milestone 4: Lagos environment
+
+Build Ojuelegba Junction with:
+
+- Modular buildings.
+- Recognizable Lagos-inspired details.
+- Balanced combat routes.
+- Proper collision.
+- Team spawns.
+- Environmental audio.
+- Original visual identity.
+
+Replace ugly development placeholders where doing so materially improves the experience.
+
+Milestone 5: Product experience
+
+Implement:
+
+- Main menu.
+- Private room codes.
+- Shareable room links.
+- Public room discovery or simple matchmaking.
+- Loading states.
+- Settings.
+- Results screen.
+- Responsive non-game UI.
+
+Milestone 6: Stabilization
+
+Test:
+
+- Multiple clients.
+- Respawns.
+- Disconnects.
+- Full rooms.
+- Invalid requests.
+- Weapon fire-rate enforcement.
+- Match completion.
+- Browser refreshes.
+- Performance.
+- Production deployment.
+
+Fix critical issues before adding content.
+
+---
+
+11. AI AGENT WORKFLOW
+
+You may use multiple specialized coding agents if the development environment supports them.
+
+However, parallel work must be coordinated through clear interfaces.
+
+Suggested roles:
+
+Agent A: Gameplay
+
+- Player movement.
+- Camera.
+- Weapons.
+- Combat feedback.
+
+Agent B: Multiplayer
+
+- Server.
+- Rooms.
+- Synchronization.
+- Authoritative combat.
+
+Agent C: Environment
+
+- Arena geometry.
+- Modular props.
+- Materials.
+- Lighting and optimization.
+
+Agent D: UI and integration
+
+- Menu.
+- HUD.
+- Lobby.
+- Match results.
+- Integration and testing.
+
+The lead agent owns architecture, shared types, integration, and final verification.
+
+Do not let multiple agents independently rewrite the same foundational files.
+
+Before parallel implementation, define:
+
+- Shared interfaces.
+- File ownership.
+- Data structures.
+- Network messages.
+- Acceptance criteria.
+- Integration checkpoints.
+
+If multiple agents are unavailable, execute the same work sequentially.
+
+Use Git branches or equivalent isolation where possible. Integrate small, tested changes frequently.
+
+---
+
+12. TESTING AND QUALITY ASSURANCE
+
+Testing is part of development, not an optional final step.
+
+Create appropriate automated tests for:
+
+- Weapon configuration.
+- Fire-rate validation.
+- Ammunition and reload rules.
+- Damage and elimination logic.
+- Team scoring.
+- Match-state transitions.
+- Room capacity.
+- Invalid network messages.
+- Respawn behavior.
+
+Create a repeatable multiplayer smoke test where possible.
+
+Use browser automation or an equivalent test setup if the development environment supports it.
+
+Manually verify the actual rendered game and user interactions.
+
+Do not claim a test passed if it was not run.
+
+Do not claim multiplayer works if only one client has been tested.
+
+For each milestone, report:
+
+- What was implemented.
+- What was tested.
+- What passed.
+- What failed.
+- Known limitations.
+- The next highest-priority task.
+
+Fix critical errors before progressing to optional features.
+
+---
+
+13. DEPLOYMENT AND OPERATIONS
+
+Prepare the application for deployment with clear separation between client and server configuration.
+
+Provide:
+
+- A documented local development command.
+- A production build command.
+- A production server start command.
+- Environment-variable documentation.
+- A deployment guide.
+- Health checks for the server.
+- Appropriate WebSocket configuration.
+- A clear method of configuring the production server URL.
+- Instructions for HTTPS and secure WebSocket connections in production.
+
+Do not hardcode "localhost" into production configuration.
+
+Do not expose secrets in frontend environment variables.
+
+Choose deployment infrastructure compatible with a persistent multiplayer server. Do not assume that a static website host alone can run the game server.
+
+Make the smallest viable deployment work before optimizing for large-scale traffic.
+
+The initial target is a small community playing real matches. Design for growth, but do not prematurely build enterprise-scale infrastructure.
+
+---
+
+14. VIRALITY AND COMMUNITY FEATURES
+
+The game should be naturally easy to share.
+
+Prioritize:
+
+- Shareable private-room links.
+- Short matches.
+- Fast rematches.
+- Memorable match results.
+- Player nicknames.
+- A simple leaderboard.
+- Community challenges as a future extension.
+
+Do not interrupt gameplay with forced sharing.
+
+Do not add fake concurrent-player counts, fabricated leaderboards, or misleading popularity indicators.
+
+For the initial version, persistent accounts, ranked matchmaking, cosmetics, progression trees, battle passes, and monetization are optional future features.
+
+Keep the architecture extensible enough to support them later without building them now.
+
+---
+
+15. STRICT SCOPE CONTROL
+
+The initial playable release includes:
+
+- One Lagos-inspired arena.
+- One Team Deathmatch mode.
+- Two functional weapons.
+- Four to eight players per match.
+- Real multiplayer.
+- Private rooms.
+- Basic public matchmaking or room discovery.
+- Guest identities.
+- A functioning HUD.
+- A scoreboard.
+- Respawning.
+- A match-results screen.
+- Browser-based deployment.
+
+The following are explicitly OUT OF SCOPE until the core game is proven:
+
+- A huge open world.
+- A story campaign.
+- Dozens of maps.
+- Battle royale.
+- Vehicles that players can drive.
+- A complex inventory system.
+- Elaborate character customization.
+- A sophisticated economy.
+- A massive persistent backend.
+- Native console or mobile ports.
+- Advanced progression and monetization systems.
+
+Do not add these because they sound impressive.
+
+The goal is a small game that works exceptionally well, not a large game that barely works.
+
+---
+
+16. DEFINITION OF DONE
+
+The first prototype is complete only when all critical criteria below are verified.
+
+Gameplay
+
+- [ ] A player can load the game in a supported desktop browser.
+- [ ] Mouse-look and keyboard movement work.
+- [ ] Player collision works.
+- [ ] Weapons fire and reload.
+- [ ] Hits register and cause appropriate damage.
+- [ ] Eliminations and respawns work.
+
+Multiplayer
+
+- [ ] Two or more independent clients can join the same match.
+- [ ] Players see one another move.
+- [ ] Weapon actions and damage are validated by the server.
+- [ ] Scores remain consistent across clients.
+- [ ] Disconnects do not crash the entire room.
+- [ ] Matches end correctly.
+
+Product experience
+
+- [ ] A user can create or join a room.
+- [ ] A private room can be shared with another player.
+- [ ] The match can be played from beginning to end.
+- [ ] Results are shown accurately.
+- [ ] Players can rematch or return to the lobby.
+- [ ] Errors and loading states are understandable.
+
+Engineering
+
+- [ ] The application builds successfully.
+- [ ] Relevant automated tests pass.
+- [ ] There are no known critical console errors during the tested flow.
+- [ ] The production client can connect to the deployed multiplayer server.
+- [ ] The setup and deployment instructions work.
+- [ ] Performance has been measured rather than guessed.
+
+A beautiful menu does not compensate for broken multiplayer.
+
+A functional local demo does not count as a working online FPS.
+
+A successful build does not automatically mean the game has been tested.
+
+---
+
+17. HOW YOU SHOULD OPERATE
+
+Be proactive, pragmatic, and technically honest.
+
+When a decision is not specified, choose the simplest reliable solution consistent with the vision.
+
+Do not repeatedly ask the founder to make low-level implementation decisions that you can reasonably make yourself.
+
+Ask for clarification only when a decision materially affects the product, requires unavailable credentials, involves an irreversible action, or cannot be resolved safely from context.
+
+Do not silently replace core technologies or remove essential functionality.
+
+Do not install unnecessary packages or introduce paid services without a clear reason.
+
+If an external service requires credentials, implement the integration cleanly and document the required setup rather than pretending it works.
+
+If a feature is too ambitious for the current milestone, implement a smaller working version and document the limitation.
+
+When you encounter an error:
+
+1. Reproduce it.
+2. Identify the underlying cause.
+3. Fix the cause.
+4. Run the relevant test again.
+5. Verify that the fix did not break another feature.
+
+Maintain a short development log and a list of remaining blockers.
+
+After each major milestone, keep the project in a runnable state.
+
+Do not merely tell me what code I should write. Use your available tools to inspect, create, edit, run, and test the project.
+
+If you have terminal access, use it. If you have browser automation, use it. If you have file-editing capabilities, use them. If a required capability is unavailable, state that limitation explicitly.
+
+Never fabricate test results, deployed URLs, working multiplayer, completed features, or performance measurements.
+
+---
+
+18. YOUR FIRST RESPONSE AND FIRST ACTIONS
+
+Begin by inspecting the current project and determining what already exists.
+
+Then respond with:
+
+1. A brief assessment of the existing codebase.
+2. The architecture you intend to use and any critical compatibility concerns.
+3. The first milestone you will implement.
+4. Any genuine blockers requiring founder input.
+
+Immediately begin implementing the first milestone.
+
+Do not spend the entire response describing the plan.
+
+Do not create a large set of empty files and call that progress.
+
+Your first deliverable must be a functioning, locally playable first-person shooter foundation. Continue toward real multiplayer as the next major milestone.
+
+FINAL DIRECTIVE
+
+Build LAST BUS: LAGOS as if it is the first release of a serious independent Nigerian gaming studio.
+
+Respect the culture. Respect the engineering. Respect the player's time.
+
+Make it lightweight, competitive, technically sound, visually distinctive, and genuinely fun.
+
+Ship a playable game before chasing a big game.

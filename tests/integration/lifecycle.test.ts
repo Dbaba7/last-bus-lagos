@@ -1,0 +1,54 @@
+import { afterAll, beforeAll, expect, it } from 'vitest';
+import { Client } from '@colyseus/sdk';
+import { VERSION } from '@lastbus/shared';
+import { Peer } from '../helpers/peer.js';
+import { testServer, until, sleep } from '../helpers/server.js';
+import { closeRoom } from '../../apps/client/src/closeRoom.js';
+let server: Awaited<ReturnType<typeof testServer>>;
+const peers: Peer[] = [];
+beforeAll(async () => { server = await testServer(2572, { TEST_MATCH_SECONDS: '120' }); });
+afterAll(async () => { for (const p of peers) await p.close(); await server.stop(); });
+it('recovers an interrupted connection without a new life; expires absent players and abandons an empty team', async () => {
+  const host = await Peer.create(server.endpoint); peers.push(host);
+  const guest = await Peer.join(server.endpoint, host); peers.push(guest);
+  host.ready(); guest.ready(); await until(() => host.state.players.every(p => p.ready)); host.room.send('start'); await until(() => host.state.phase === 'ACTIVE');
+  const life = guest.player!.life, id = guest.id; let recovered = false;
+  guest.room.reconnection.minUptime = 0; guest.room.reconnection.delay = 100; guest.room.reconnection.minDelay = 100;
+  guest.room.onReconnect(() => { recovered = true; });
+  guest.room.connection.close(4010, 'Test interruption');
+  await until(() => recovered && guest.player!.connected, 8000, 'automatic reconnect');
+  expect(guest.id).toBe(id); expect(guest.player!.life).toBe(life); expect(host.state.players).toHaveLength(2);
+  guest.room.reconnection.enabled = false; guest.room.connection.close(4010, 'Test interruption');
+  await until(() => host.state.players.some(p => p.id === id && !p.connected));
+  await until(() => !host.state.players.some(p => p.id === id), 18000, 'reservation expiry');
+  await until(() => host.state.phase === 'RESULTS'); expect(host.state.winner).toBe('ABANDONED');
+  expect((await fetch(`${server.endpoint}/health`)).ok).toBe(true);
+}, 30000);
+it('late joins reconstruct current state and host departure transfers private-room control', async () => {
+  const host = await Peer.create(server.endpoint); peers.push(host);
+  const guest = await Peer.join(server.endpoint, host); peers.push(guest);
+  host.ready(); guest.ready(); await until(() => host.state.players.every(p => p.ready)); host.room.send('start'); await until(() => host.state.phase === 'ACTIVE');
+  const late = await Peer.join(server.endpoint, host); peers.push(late); late.ready();
+  await until(() => late.player?.ready === true); expect(late.state.phase).toBe('ACTIVE'); expect(late.state.round).toBe(host.state.round); expect(late.state.deadline).toBe(host.state.deadline);
+  const token = host.invite; await host.close(); await until(() => guest.state.host === guest.id);
+  await guest.close(); await late.close();
+  await sleep(200);
+  const response = await fetch(`${server.endpoint}/api/invite`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }) });
+  expect(response.status).toBe(404);
+});
+it('fills public rooms to eight, starts at four, and gives a ninth player another room', async () => {
+  const rooms = await Promise.all(Array.from({ length: 8 }, (_, i) => new Client(server.endpoint).joinOrCreate('street_wars', { version: VERSION, name: `Public ${i}` })));
+  const group = rooms.map(room => new Peer(room)); peers.push(...group); group.forEach(p => p.ready());
+  await until(() => group[0].state.players.length === 8 && group[0].state.phase === 'ACTIVE');
+  expect(new Set(group.map(p => p.room.roomId)).size).toBe(1);
+  expect(group[0].state.players.filter(p => p.team === 0)).toHaveLength(4);
+  const ninth = new Peer(await new Client(server.endpoint).joinOrCreate('street_wars', { version: VERSION })); peers.push(ninth);
+  expect(ninth.room.roomId).not.toBe(group[0].room.roomId);
+});
+it('leaves during a pending reconnect without hanging or reopening the discarded connection', async () => {
+  const host = await Peer.create(server.endpoint); peers.push(host); await until(() => !!host.player);
+  host.room.reconnection.minUptime = 0; let dropped = false; host.room.onDrop(() => { dropped = true; });
+  host.room.connection.close(4010, 'Test menu during reconnect'); await until(() => dropped); await sleep(30);
+  const start = Date.now(); await closeRoom(host.room); expect(Date.now() - start).toBeLessThan(1800);
+  await sleep(1000); expect(host.room.connection.isOpen).toBe(false);
+});
